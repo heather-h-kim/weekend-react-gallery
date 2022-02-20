@@ -19,6 +19,20 @@ function App() {
       setGalleryList(response.data);
     })
   }
+  
+  const updateLikes = (id) => {
+    console.log('in updateLikes');
+    axios({
+      method: 'PUT',
+      url: `/gallery/like/${id}`
+    }).then((response) => {
+      console.log('PUT response.data is', response.data);
+      getItem();
+    }).catch((error) => {
+      console.log('Error updating likes', error);
+    })
+  }
+
 
   useEffect(() => {
     console.log('in useEffect');
@@ -31,7 +45,7 @@ function App() {
           <h1 className="App-title">Gallery of My Life</h1>
         </header>
         {/* <p>Gallery goes here</p> */}
-        <GalleryList galleryList={galleryList}/> 
+        <GalleryList galleryList={galleryList} updateLikes={updateLikes}/> 
         {/* <img src="images/goat_small.jpg"/> */}
       </div>
     );
