@@ -1,11 +1,12 @@
 import GalleryItem from '../GalleryItem/GalleryItem';
+import './GalleryList.css';
 
 function GalleryList({ galleryList }) {
     console.log('in GalleryList');
     console.log('galleryList is', galleryList);
     return (
         <>
-            <div>
+            <div className='container'>
                 {galleryList.map(galleryItem =>
                 (<GalleryItem
                     key={galleryItem.id}
