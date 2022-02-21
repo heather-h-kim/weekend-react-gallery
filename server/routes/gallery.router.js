@@ -40,4 +40,41 @@ router.get('/', (req, res) => {
     // res.send(galleryItems);
 }); // END GET Route
 
-module.exports = router;p
+// DELETE Route
+router.delete('/delete/:id', (req, res) => {
+    console.log('in Delete route');
+    const valueArray = [req.params.id];
+    const sqlText = `
+    DELETE FROM "images"
+    WHERE "id" = $1;
+    `;
+
+    pool.query(sqlText, valueArray)
+    .then((result) => {
+        console.log('Image deleted');
+        res.sendStatus(200);     
+    }).catch((error) => {
+        console.log('Error making delete query', error);
+    })
+});
+
+//POST Route
+router.post('/', (req, res) => {
+    console.log('in POST route');
+    console.log('req.body is', req.body);
+    const valueArray = [req.body.path, req.body.description, req.body.likes]
+    const sqlText =`
+    INSERT INTO "images" ("path", "description", "likes")
+    VALUES ($1, $2, $3);
+    `;
+    
+    pool.query(sqlText, valueArray)
+    .then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Error in Post route', error);
+        res.sendStatus(500);
+    })
+});
+
+module.exports = router;
